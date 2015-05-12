@@ -16,9 +16,6 @@ function getColumnas() {
     foreach ($columnas as $columna) {
         $titulo = $columna;
         $orden = getOrder($columna);
-        if (isOrderedBy($columna)) {
-//            $titulo = $titulo." (".$orden.")";
-        }
         $ordenUrl = "./?col=" . $columna . "&ord=" . $orden;
         array_push($result, crearColumna($titulo, $ordenUrl));
     }
@@ -38,13 +35,13 @@ function getContactos() {
     $contactos = $db->obtenerContactos();
 
     $result = array();
-    $estilo = 0;
 
     foreach ($contactos as $contacto) {
 
         $file = "fotos/" . $contacto[0] . ".jpg";
         if (!file_exists($file))
             $file = 'fotos/nopicture.jpg';
+        
         $uploadUrl = isLoggedIn() ? './subir.php?mail=' . $contacto[0] : null;
         $deleteUrl = isLoggedIn() ? './borrarContacto.php?mail=' . $contacto[0] : null;
 

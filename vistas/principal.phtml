@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Contactos</title>
+
+        <!-- <link href="css/estilo.css" type="text/css" rel="stylesheet"> -->
+        <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/favicon.png" />
+
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>        
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </head>
+
+    <body>
+        <nav>
+            <div class="nav-wrapper">
+              <a href="#" class="brand-logo center">Contactos</a>
+              <ul id="nav-mobile" class="right">
+                <li><?php printUserData(); ?></li>
+              </ul>
+            </div>
+        </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="section">
+                <div class="col right">
+                    <a class='dropdown-button btn' href='#' data-activates='ordenar'>Ordenar</a>
+
+                    <ul id='ordenar' class='dropdown-content'>
+                        <?php foreach (getColumnas() as $columna) { ?>
+                            <li>
+                                <?php if ($columna['ordenUrl']!=null) { ?>
+                                    <a href=<?php echo $columna['ordenUrl']; ?>>
+                                        <?php echo $columna['nombre']; ?>
+                                    </a>
+                                <?php } ?>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <ul class="collection">
+                    <?php foreach (getContactos() as $contacto) { ?>
+                        <li class="collection-item avatar" id="<?php echo $contacto['mail']; ?>">
+                            <img class="circle" alt="foto" src="<?php echo $contacto['foto']; ?>"/>
+                            <span class="title"><?php echo $contacto['apellido'].' '.$contacto['nombre']; ?> </span>
+                            <p><?php echo $contacto['mail'].'<br>'.$contacto['direccion'].'  '.$contacto['telefono']?></p>
+                            <div class="secondary-content">
+                                <?php if ($contacto['uploadUrl']!=null) { ?>
+                                    <a href=<?php echo $contacto['uploadUrl']; ?> >
+                                        <i class="mdi-file-file-upload"></i>
+                                    </a>
+                                <?php } ?>
+                                <?php if ($contacto['deleteUrl']!=null) { ?>
+                                    <a href=<?php echo $contacto['deleteUrl']; ?> >
+                                        <i class="mdi-action-delete"></i>
+                                    </a>
+                                <?php } ?>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <?php if (isLoggedIn()) { ?>
+        <!-- Modal Trigger -->
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red btn modal-trigger" href="#modal"><i class="mdi-content-add"></i></a>
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="modal" class="modal">
+            <form action='./agregarContacto.php' method='post' class="col s8 offset-s2">
+                <div class="modal-content">
+                    <input type='hidden' value='agregar' name='agregar' />
+                    <div class="row">
+                        <div class="input-field col s6">
+                          <input id="nombre" name="nombre" type="text" value="Nombre" class="validate">
+                          <label for="nombre">Nombre</label>
+                        </div>
+                        <div class="input-field col s6">
+                          <input id="apellido" name="apellido" type="text" value="Apellido" class="validate">
+                          <label for="apellido">Apellido</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <input type='email' id='mail' name="mail" value="ejemplo@mail.com" class="validate" />
+                          <label for="mail">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <input type='text' id='direccion' name='direccion' value="dirección" class="validate" />
+                          <label for="direccion">Dirección</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <input type='text' id='telefono' name='telefono' value="teléfono" class="validate" />
+                          <label for="telefono">Teléfono</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn waves-effect waves-light modal-action modal-close" type="submit" name="action">Grabar
+                        <i class="mdi-content-send right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    <?php } ?>
+    </body>
+</html>
+

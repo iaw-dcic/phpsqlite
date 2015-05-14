@@ -1,5 +1,7 @@
 <?php
 
+require_once 'src/Google/autoload.php';
+
 session_start();
 if (!isLoggedIn()) {
     defined('index') or defined('loginForm') or redirect("./");
@@ -15,17 +17,29 @@ function isLoggedIn() {
 }
 
 function checkLogin() {
-    if (!isset($_POST['username']))
-        return false;
+    $client = new Google_Client();
+    $client->setAuthConfigFile('google_cred.json');
+    $client->addScope(Google_Service_Oauth2::USERINFO_EMAIL);
+    $service = new Google_Service_Oauth2($client);
 
-    $db = new DB();
-    if ($db->validarUsuario($_POST['username'], $_POST['password'])) {
-        $_SESSION['userid'] = $_POST['username'];
-        unset($_SESSION['errorLogin']);
-        return true;
+    if (isset($_GET['code'])) {
+        $client->authenticate($_GET['code']);
+        $_SESSION['access_token'] = $client->getAccessToken();  
     }
-    else
-        $_SESSION['errorLogin'] = "Usuario o Clave incorrectas.";
+
+    if (isset($_GET['error'])) {
+        $_SESSION['errorLogin'] = $_GET['error'];
+        return false;
+    }
+
+    if (isset($_SESSION['access_token'])) {
+        $client->setAccessToken($_SESSION['access_token']);
+        $user = $service->userinfo->get();
+        $_SESSION['userid'] = $user['name'];
+        return true;
+    } else {        
+        redirect($client->createAuthUrl());
+    }
 
     return false;
 }
@@ -40,7 +54,7 @@ function getError() {
 
 function printUserData() {
     if (isLoggedIn()) {
-        echo "<li><a href='logout.php' title='Logout' style='text-transform: uppercase'>";
+        echo "<li><a href='logout.php' title='Logout'>";
         echo $_SESSION['userid'];
         echo "</a></li>";
     } else {

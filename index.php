@@ -1,13 +1,14 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
+
 define('index', 1);
 include_once './auxiliares/login.php';
 include_once './auxiliares/db.php';
 include_once './auxiliares/orden.php';
 
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
-error_reporting(-1);
 
 function getColumnas() {
     $columnas = array("mail", "apellido", "nombre", "direccion", "telefono");
@@ -41,11 +42,12 @@ function getContactos() {
         $file = "fotos/" . $contacto[0] . ".jpg";
         if (!file_exists($file))
             $file = 'fotos/nopicture.jpg';
-        
+
         $uploadUrl = isLoggedIn() ? './subir.php?mail=' . $contacto[0] : null;
         $deleteUrl = isLoggedIn() ? './borrarContacto.php?mail=' . $contacto[0] : null;
 
         array_push($result, array(
+            'id' => getID($contacto[0]),
             'mail' => $contacto[0],
             'apellido' => $contacto[1],
             'nombre' => $contacto[2],

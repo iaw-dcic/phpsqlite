@@ -12,5 +12,6 @@ function getErrorLogin() {
     return hayError() ? getError() : "";
 }
 
+include './vistas/template.phtml';
 include './vistas/login.phtml';
 ?>

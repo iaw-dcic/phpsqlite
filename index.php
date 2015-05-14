@@ -60,6 +60,6 @@ function getContactos() {
 
     return $result;
 }
-
+include './vistas/template.phtml';
 include './vistas/principal.phtml';
 ?>

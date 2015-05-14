@@ -20,6 +20,12 @@ function checkLogin() {
     $client = new Google_Client();
     $client->setAuthConfigFile($_SERVER['HTTP_HOST'] == 'localhost' ? 'google_cred.localhost.json' : 'google_cred.json');
     $client->addScope(Google_Service_Oauth2::USERINFO_EMAIL);
+    if ($_SERVER['HTTP_HOST'] != 'localhost') {
+        $client->getIo()->setOptions(array(
+            CURLOPT_PROXY => '10.0.2.1',
+            CURLOPT_PROXYPORT => 1280
+        ));
+    }
     $service = new Google_Service_Oauth2($client);
 
     if (isset($_GET['code'])) {

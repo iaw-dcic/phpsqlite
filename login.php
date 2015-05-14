@@ -10,5 +10,6 @@ function getErrorLogin() {
     return isset($_SESSION['errorLogin'])? $_SESSION['errorLogin'] : "";
 }
 
+include './vistas/template.phtml';
 include './vistas/login.phtml';
 ?>

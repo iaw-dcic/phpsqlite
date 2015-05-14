@@ -25,6 +25,7 @@ else
         $error = "Error: Formato no soportado: " . $_FILES["file"]["type"];
 
 
+include './vistas/template.phtml';
 include './vistas/subirArchivo.phtml';
 
 ?> 

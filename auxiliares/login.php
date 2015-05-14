@@ -18,7 +18,7 @@ function isLoggedIn() {
 
 function checkLogin() {
     $client = new Google_Client();
-    $client->setAuthConfigFile('google_cred.json');
+    $client->setAuthConfigFile($_SERVER['HTTP_HOST'] == 'localhost' ? 'google_cred.localhost.json' : 'google_cred.json');
     $client->addScope(Google_Service_Oauth2::USERINFO_EMAIL);
     $service = new Google_Service_Oauth2($client);
 

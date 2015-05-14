@@ -41,11 +41,12 @@ function getContactos() {
         $file = "fotos/" . $contacto[0] . ".jpg";
         if (!file_exists($file))
             $file = 'fotos/nopicture.jpg';
-        
+
         $uploadUrl = isLoggedIn() ? './subir.php?mail=' . $contacto[0] : null;
         $deleteUrl = isLoggedIn() ? './borrarContacto.php?mail=' . $contacto[0] : null;
 
         array_push($result, array(
+            'id' => getID($contacto[0]),
             'mail' => $contacto[0],
             'apellido' => $contacto[1],
             'nombre' => $contacto[2],

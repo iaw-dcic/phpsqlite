@@ -48,4 +48,9 @@ function printUserData() {
     }
 }
 
+function getID($mail) {
+    return str_replace("@", "-", str_replace(".", "-", $mail));
+}
+
+
 ?>

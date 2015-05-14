@@ -48,7 +48,7 @@
             <div class="col s12">
                 <ul class="collection">
                     <?php foreach (getContactos() as $contacto) { ?>
-                        <li class="collection-item avatar" id="<?php echo $contacto['mail']; ?>">
+                        <li class="collection-item avatar" id="<?php echo $contacto['id']; ?>">
                             <img class="circle" alt="foto" src="<?php echo $contacto['foto']; ?>"/>
                             <span class="title"><?php echo $contacto['apellido'].' '.$contacto['nombre']; ?> </span>
                             <p><?php echo $contacto['mail'].'<br>'.$contacto['direccion'].'  '.$contacto['telefono']?></p>
@@ -59,7 +59,7 @@
                                     </a>
                                 <?php } ?>
                                 <?php if ($contacto['deleteUrl']!=null) { ?>
-                                    <a href=<?php echo $contacto['deleteUrl']; ?> >
+                                    <a onclick="borrarContacto('<?php echo $contacto['deleteUrl']; ?>')" class='click'>
                                         <i class="mdi-action-delete"></i>
                                     </a>
                                 <?php } ?>

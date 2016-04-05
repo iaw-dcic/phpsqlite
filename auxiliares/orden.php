@@ -1,15 +1,17 @@
 <?php
 
-function getColumna() {
+function getColumnaActual() {
     return isset($_GET['col']) ? $_GET['col'] : "apellido";
 }
 
-function getOrden() {
+function getOrdenActual() {
     return isset($_GET['ord']) ? $_GET['ord'] : "asc";
 }
 
+
+
 function isOrderedBy($columna) {
-    return (getColumna() == $columna);
+    return (getColumnaActual() == $columna);
 }
 
 function inverseOrder($order) {
@@ -19,9 +21,9 @@ function inverseOrder($order) {
         return "asc";
 }
 
-function getOrder($columna) {
+function getOrdenSiguiente($columna) {
     if (isOrderedBy($columna))
-        return inverseOrder(getOrden());
+        return inverseOrder(getOrdenActual());
     else
         return "asc";
 }

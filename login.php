@@ -9,7 +9,7 @@ if (checkLogin())
     redirect("./");
 
 function getErrorLogin() {
-    return isset($_SESSION['errorLogin'])? $_SESSION['errorLogin'] : "";
+    return hayError() ? getError() : "";
 }
 
 include './vistas/login.phtml';

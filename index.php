@@ -1,13 +1,13 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
+
 define('index', 1);
 include_once './auxiliares/login.php';
 include_once './auxiliares/db.php';
 include_once './auxiliares/orden.php';
-
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
-error_reporting(-1);
 
 function getColumnas() {
     $columnas = array("mail", "apellido", "nombre", "direccion", "telefono");
@@ -15,7 +15,7 @@ function getColumnas() {
 
     foreach ($columnas as $columna) {
         $titulo = $columna;
-        $orden = getOrder($columna);
+        $orden = getOrdenSiguiente($columna);
         $ordenUrl = "./?col=" . $columna . "&ord=" . $orden;
         array_push($result, crearColumna($titulo, $ordenUrl));
     }
@@ -32,7 +32,7 @@ function crearColumna($nombre, $ordenUrl) {
 function getContactos() {
 
     $db = new DB();
-    $contactos = $db->obtenerContactos();
+    $contactos = $db->obtenerContactos(getColumnaActual(), getOrdenActual());
 
     $result = array();
 

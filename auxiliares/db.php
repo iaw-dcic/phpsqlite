@@ -16,9 +16,8 @@ class DB {
         }
     }
 
-    function obtenerContactos() {
-        $columna = getColumna();
-        return $this->db->query("SELECT * FROM contactos ORDER BY " . $columna . " " . getOrder($columna))->fetchAll();
+    function obtenerContactos($columna, $orden) {
+        return $this->db->query("SELECT * FROM contactos ORDER BY " . $columna . " " . $orden)->fetchAll();
     }
 
     function eliminarContacto($mail) {

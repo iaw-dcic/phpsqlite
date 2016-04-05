@@ -32,11 +32,9 @@
                     <ul id='ordenar' class='dropdown-content'>
                         <?php foreach (getColumnas() as $columna) { ?>
                             <li>
-                                <?php if ($columna['ordenUrl']!=null) { ?>
-                                    <a href=<?php echo $columna['ordenUrl']; ?>>
-                                        <?php echo $columna['nombre']; ?>
-                                    </a>
-                                <?php } ?>
+                                <a href=<?php echo $columna['ordenUrl']; ?>>
+                                    <?php echo $columna['nombre']; ?>
+                                </a>
                             </li>
                         <?php } ?>
                     </ul>
